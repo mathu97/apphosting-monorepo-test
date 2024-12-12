@@ -28,6 +28,8 @@ steps:
       - /yaml/apphostingyaml_processed
       - --dot_env_output_filepath
       - /env/vars_with_secret_values
+      - --buildpack_config_output_filepath
+      - /config
     volumes:
       - name: output_bundle
         path: /output_bundle
