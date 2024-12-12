@@ -15,7 +15,7 @@ steps:
         path: /yaml
 
   - id: preparer
-    name: us-east1-docker.pkg.dev/mathusan-fwp/mathusan-test/builder:localbuild
+    name: us-east1-docker.pkg.dev/mathusan-fwp/mathusan-test/builder:latest
     entrypoint: /bin/preparer
     args:
       - --apphostingyaml_filepath
@@ -45,7 +45,7 @@ steps:
       - --network
       - cloudbuild
       - --builder
-      - us-east1-docker.pkg.dev/mathusan-fwp/mathusan-test/builder:localbuild
+      - us-east1-docker.pkg.dev/mathusan-fwp/mathusan-test/builder:latest
       - --volume
       - output_bundle:/output_bundle:rw
       - --trust-builder
@@ -60,7 +60,7 @@ steps:
         path: /env
 
   - id: publisher
-    name: us-east1-docker.pkg.dev/mathusan-fwp/mathusan-test/builder:localbuild
+    name: us-east1-docker.pkg.dev/mathusan-fwp/mathusan-test/builder:latest
     entrypoint: /bin/bash
     args:
       - -c
