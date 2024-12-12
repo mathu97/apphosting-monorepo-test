@@ -23,7 +23,7 @@ steps:
       - backend_root_directory
       - /app-one
       - --project_id
-      - $PROJECT_ID
+      - mathusan-fwp
       - --apphostingyaml_output_filepath
       - /yaml/apphostingyaml_processed
       - --dot_env_output_filepath
