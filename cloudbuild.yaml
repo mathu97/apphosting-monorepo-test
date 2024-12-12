@@ -15,7 +15,7 @@ steps:
         path: /yaml
 
   - id: preparer
-    name: us-east1-docker.pkg.dev/mathusan-fwp/mathusan-test/builder:localbuild
+    name: us-east1-docker.pkg.dev/mathusan-fwp/mathusan-test/preparer:localbuild
     entrypoint: /bin/preparer
     args:
       - --apphostingyaml_filepath
