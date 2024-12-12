@@ -20,10 +20,10 @@ steps:
     args:
       - --apphostingyaml_filepath
       - /workspace/apphosting.yaml
-      - backend_root_directory
+      - --backend_root_directory
       - /app-one
       - --project_id
-      - mathusan-fwp
+      - $PROJECT_ID
       - --apphostingyaml_output_filepath
       - /yaml/apphostingyaml_processed
       - --dot_env_output_filepath
