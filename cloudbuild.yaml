@@ -1,0 +1,77 @@
+---
+steps:
+  - id: init-volume
+    name: ubuntu
+    entrypoint: bash
+    args:
+      - -c
+      - chmod -R ugo+rw /output_bundle /workspace /env /yaml
+    volumes:
+      - name: output_bundle
+        path: /output_bundle
+      - name: env
+        path: /env
+      - name: yaml
+        path: /yaml
+
+  - id: preparer
+    name: us-east1-docker.pkg.dev/mathusan-fwp/mathusan-test/builder:localbuild
+    entrypoint: /bin/preparer
+    args:
+      - --apphostingyaml_filepath
+      - /workspace/apphosting.yaml
+      - backend_root_directory
+      - /app-one
+      - --project_id
+      - $PROJECT_ID
+      - --apphostingyaml_output_filepath
+      - /yaml/apphostingyaml_processed
+      - --dot_env_output_filepath
+      - /env/vars_with_secret_values
+    volumes:
+      - name: output_bundle
+        path: /output_bundle
+      - name: env
+        path: /env
+      - name: yaml
+        path: /yaml
+
+  - id: build-from-source
+    name: gcr.io/k8s-skaffold/pack
+    entrypoint: pack
+    args:
+      - build
+      - $LOCATION-docker.pkg.dev/$PROJECT_ID/firebaseapphosting-images/${_BACKEND}:localbuild
+      - --network
+      - cloudbuild
+      - --builder
+      - us-east1-docker.pkg.dev/mathusan-fwp/mathusan-test/builder:localbuild
+      - --volume
+      - output_bundle:/output_bundle:rw
+      - --trust-builder
+      - --env-file
+      - /env/vars_with_secret_values
+      - --env
+      - FIREBASE_OUTPUT_BUNDLE_DIR=/output_bundle
+    volumes:
+      - name: output_bundle
+        path: /output_bundle
+      - name: env
+        path: /env
+
+  - id: publisher
+    name: us-east1-docker.pkg.dev/mathusan-fwp/mathusan-test/builder:localbuild
+    entrypoint: /bin/bash
+    args:
+      - -c
+      - /bin/publisher --apphostingyaml_filepath /yaml/apphostingyaml_processed --output_bundle_dir /output_bundle --output_filepath "$$BUILDER_OUTPUT/output”
+    volumes:
+      - name: output_bundle
+        path: /output_bundle
+      - name: yaml
+        path: /yaml
+images:
+  - $LOCATION-docker.pkg.dev/$PROJECT_ID/firebaseapphosting-images/${_BACKEND}:localbuild
+serviceAccount: "projects/$PROJECT_ID/serviceAccounts/firebase-app-hosting-compute@$PROJECT_ID.iam.gserviceaccount.com"
+options:
+  logging: CLOUD_LOGGING_ONLY
