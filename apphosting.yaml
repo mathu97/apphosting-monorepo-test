@@ -1,0 +1,5 @@
+env:
+  - variable: TEST_ENV
+    value: THIS ENV IS COMING FROM ROOT APPHOSTING.YAML
+    availability:
+      - RUNTIME

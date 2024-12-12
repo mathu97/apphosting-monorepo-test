@@ -1,0 +1,5 @@
+env:
+  - variable: TEST_ENV
+    value: THIS ENV IS COMING FROM APP_ONE MONOREPO APPHOSTING.YAML
+    availability:
+      - RUNTIME
