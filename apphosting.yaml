@@ -3,3 +3,4 @@ env:
     value: THIS ENV IS COMING FROM ROOT APPHOSTING.YAML
     availability:
       - RUNTIME
+      - BUILD

@@ -3,3 +3,4 @@ env:
     value: THIS ENV IS COMING FROM APP_TWO MONOREPO APPHOSTING.YAML
     availability:
       - RUNTIME
+      - BUILD
