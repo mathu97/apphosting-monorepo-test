@@ -1,5 +1,5 @@
 env:
-  - variable: TEST_ENV
+  - variable: NEXT_PUBLIC_TEST_ENV
     value: THIS ENV IS COMING FROM APP_TWO MONOREPO APPHOSTING.YAML
     availability:
       - RUNTIME
